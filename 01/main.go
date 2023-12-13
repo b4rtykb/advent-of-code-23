@@ -5,14 +5,33 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"regexp"
+	"strconv"
 )
 
 func main() {
 	lines := splitText()
 
-	for k, v := range lines {
-		fmt.Println(k, v)
+	re := regexp.MustCompile("[0-9]")
+
+	sum := 0
+
+	for _, line := range lines {
+		str := ""
+
+		num := re.FindAllString(line, -1)
+
+		// add first + last numbers in string
+		str = str + num[0]
+		str = str + num[len(num)-1]
+
+		int, _ := strconv.Atoi(str)
+
+		sum = sum + int
 	}
+
+	fmt.Println(sum)
+
 }
 
 func splitText() []string {
